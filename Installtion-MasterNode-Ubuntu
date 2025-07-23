@@ -1,0 +1,127 @@
+Installation
+
+Master Nodes:
+
+api
+etcd
+scheduler
+controller
+
+installation tools/utility/scripts:
+  
+1. kubeadm
+2. ansible
+3. KOPS
+4. kubespray
+
+Step-1: kubeadm utility
+Step-2: cri-o
+Step-3: kubelet
+Step-4: start the api/controller/etct/scheduler
+
+Refer the website for installation : https://cri-o.io/
+
+Step-1 :	Define the Kubernetes version and used CRI-O stream
+		 KUBERNETES_VERSION=v1.32
+		 CRIO_VERSION=v1.32
+
+
+Step-2 :	Bootstrap a cluster (Pre-Requites)
+		 swapoff -a
+		 modprobe br_netfilter
+		 sysctl -w net.ipv4.ip_forward=1
+ 
+
+
+
+
+Step-3 :  Add the Kubernetes repository
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/kubernetes.list
+
+Add the CRI-O repository:
+
+curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/cri-o.list
+
+
+Step-4 : Install
+
+apt get update -y
+apt install kubeadm cro-o kubelet -y
+
+
+systemctl start crio
+systemctl start kubelet
+
+
+systemctl status cri-o
+systemctl status cri-o kubelet
+
+systemctl is-active kubelet
+systemctl is-active cri-o
+
+
+Step-5: kubeadm init
+
+or kubeadm init --apiserver-advertise-address=192.168.1.2
+
+
+
+crictl ps
+crictl images
+
+
+
+Imp Folder in master node
+
+ls /etc/kubernetes/manifests/   # these are 4 files which controls all 4 master container
+ls /etc/kubernetes/pki/		# All certificate are here & mounted from here in containsers
+ls /var/lib/kubelet/
+
+kubeadm: It is a installation utility 
+
+kubelet: It is service / agent across all nodes.
+
+kubectl: command cli talk to api..required on master node.
+
+To login into api we need 
+API IP | USER Name | PWD
+
+Here all 4 container are bind with the host network hence API IP will be master host interface IP itself.
+
+netstat -tunlp | grep -i api  # to check API server port & IP
+
+
+and default super user name / PWD will kept in ...  ls -l /etc/kubernetes/admin.conf
+
+
+cat /etc/kubernetes/admin.conf | grep -i user
+    user: kubernetes-admin
+users:
+  user:
+
+
+cat /etc/kubernetes/admin.conf | grep -i server
+    server: https://10.150.50.180:6443
+
+
+mkdir .kube
+
+cp /etc/kubernetes/admin.conf .kube/config
+
+kubectl get nodes
+kubectl get pod -A
+
+
+
+
+
+
