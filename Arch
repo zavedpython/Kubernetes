@@ -1,0 +1,63 @@
+1. Control Plane (Master Components)
+Manages the entire cluster:
+
+Component	                                          Description
+kube-apiserver	                        Exposes the Kubernetes API. Acts as the front door to the cluster.
+                                              1. command listener
+                                              2. authentication and  authorization
+                                              3. communication  channel . 
+                                               User --Login--commands-- APIservers (Validate)--- Further  initiate .  
+
+etcd    	                              Distributed key-value store. Stores all cluster data (state, configuration). it is the database of  APIserver .  It container  all  information about the Clusters 
+                                        key: value information :  yaml based 
+
+kube-scheduler	                        pod placement  across the Nodes.(Default | Custom), Assigns Pods to available Nodes based on resource availability and constraints.
+
+kube-controller-manager	                it monitor  pod state /Node   state . Runs controllers that manage resources like ReplicationController, NodeController, etc.
+
+
+
+
+1. Worker Plane  Application Node
+Runs actual workloads (Pods/containers):
+
+Component	                              Description
+kubelet	                             Talks to the API server, ensures containers are running as per Pod specs. It  is agent  of  APIserver which take the instruction from API and pass to Container runtime. 
+
+kube-proxy	                         Manages networking, routes traffic to Pods.
+Container runtime (cri-o)           Container runtime	Runs the containers (e.g., containerd, Docker, CRI-O).
+
+
+
+ 
+   
+
+Pod Create.(write )
+Command ---APIServer (validates)---etcd----scheduler---Controller
+
+Get Query 
+Command--get pod ---API(validatation)---etcd 
+
+Master Nodes:
+
+ 1. api
+  2. etcd
+  3. scheduler
+ 4. controller
+
+Workernode:
+      1. cri-o
+      2.  kubelet
+       3. Kube-proxy 
+
+
+	1. User managed  K8s 
+	2.  Cloud managed  k8s (PAAS mode)
+
+
+AMZAON:  EKS
+GOOGLE: GKE
+Azure: AKS 
+
+
+
