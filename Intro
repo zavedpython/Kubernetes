@@ -1,0 +1,10 @@
+Kubernetes (K8s) is an open-source container orchestration platform developed by Google and now maintained by the Cloud Native Computing Foundation (CNCF). 
+It helps automate the deployment, scaling, and management of containerized applications.
+
+🔧 What Kubernetes Does:
+Orchestrates Containers: Manages Docker or other container runtimes.
+Self-Healing: Restarts failed containers, replaces them, and kills unresponsive ones.
+Auto-Scaling: Automatically scales applications up or down based on usage.
+Load Balancing: Distributes traffic across containers to ensure reliability.
+Rolling Updates & Rollbacks: Updates applications without downtime and reverts if needed.
+Resource Management: Ensures efficient use of CPU, memory, and other resources.
