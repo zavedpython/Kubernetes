@@ -1,0 +1,39 @@
+KUBERNETES_VERSION=v1.32
+CRIO_VERSION=v1.32
+swapoff -a
+modprobe br_netfilter
+sysctl -w net.ipv4.ip_forward=1
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/kubernetes.list
+
+curl -fsSL https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.opensuse.org/repositories/isv:/cri-o:/stable:/$CRIO_VERSION/deb/ /" |
+    tee /etc/apt/sources.list.d/cri-o.list
+
+apt update -y
+apt install kubelet cri-o -y
+
+systemctl start crio
+systemctl start kubelet
+systemctl enable crio
+systemctl enable kubelet
+
+------------------------------
+Now to join API Master server 
+
+API Server IP | Port
+API Token  (It is required one time only when you join the master cluster )      # kubeadm token list  -- run command on master node
+# kubeadm token delete <token>
+# kubeadm token create --ttl-duration=0
+# kubeadm token create
+
+Certificate  (It is required to communication trust relationship, These certs provised from master node)   # ls /etc/kubernetes/pki -- on master node ca.crt 
+
+To Join cluster command :--
+# kubeadm token create --print-join-command
