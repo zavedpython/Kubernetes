@@ -1,26 +1,30 @@
-L-3:
+After joined the cluster you need to setup network for communication
+
+In K8s newtworks work on L3 layer...however it create L2 also but prefred the L3 network....
+
+There are some below pupuler third-party software/tools to create L3 networks.. These are software defined networks
 
 1. Flannel
 2. Weave
-3. OVS
-4. Calico  (recommended)
+3. OVN - kubernetes
+4. OVS
+5. Calico  (recommended)
+
+Calico----
 
 Pool default
 IP
 POD to POD communication
 	Installation : manifest yaml files
 
-download Calico manifest on master node:
-
-https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises 
-
+download Calico manifest on master node:  https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises 
 ls
 calico.yaml
 
-kubectl create -f calico.yaml
+kubectl create -f calico.yaml    # To create the calico networks
 
 kubectl get pod -A
 kubectl get pod -A -o wide
 
 
-kubectl get ippool -o yaml
+kubectl get ippool -o yaml  # to see the subnet & IP details
