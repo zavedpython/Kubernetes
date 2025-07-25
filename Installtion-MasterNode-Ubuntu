@@ -1,3 +1,5 @@
+kubeadm reset -f # to reset the cluster
+
 Installation
 
 Master Nodes:
