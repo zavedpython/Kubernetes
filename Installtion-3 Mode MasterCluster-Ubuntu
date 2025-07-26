@@ -1,1 +1,9 @@
+Step-1
+
+setup a load balancer and add all master K8s node into this load balancer. Get the LB DNS & Port number
+
+Step-2
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
+sudo kubeadm init --control-plane-endpoint "LOAD_BALANCER_DNS:LOAD_BALANCER_PORT" --upload-certs
+
 
