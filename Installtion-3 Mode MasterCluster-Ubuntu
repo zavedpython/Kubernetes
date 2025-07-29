@@ -30,4 +30,8 @@ firewall-cmd --reload
 firewall-cmd --list-all
 
 
+kubeadm token create --print-join-command   # to get join command worker into master cluster
+
+
+
 
