@@ -1,0 +1,71 @@
+🔍 Cluster and Context Management
+Command	Description
+kubectl config get-contexts	List all available contexts.
+kubectl config use-context <context-name>	Switch to a specific context.
+kubectl config current-context	Show the current context.
+kubectl cluster-info	Show cluster master and service info.
+kubectl get componentstatuses	Get status of cluster components (deprecated in newer versions).
+
+🧠 Nodes and System Health
+Command	Description
+kubectl get nodes	List all nodes in the cluster.
+kubectl describe node <node-name>	Get detailed info about a specific node.
+kubectl cordon <node>	Mark a node as unschedulable.
+kubectl drain <node> --ignore-daemonsets	Prepare a node for maintenance.
+kubectl uncordon <node>	Make a node schedulable again.
+
+📦 Pods and Workloads
+Command	Description
+kubectl get pods	List all pods in the current namespace.
+kubectl get pods -A	List pods in all namespaces.
+kubectl describe pod <pod-name>	Detailed info about a pod.
+kubectl logs <pod-name>	Show logs of a pod.
+kubectl logs <pod-name> -c <container>	Logs of a specific container.
+kubectl exec -it <pod> -- /bin/bash	Execute command in a pod (interactive shell).
+kubectl delete pod <pod-name>	Delete a pod.
+kubectl port-forward <pod-name> 8080:80	Forward local port to pod port.
+
+🎯 Deployments, ReplicaSets, StatefulSets
+Command	Description
+kubectl get deployments	List deployments.
+kubectl describe deployment <name>	Describe deployment.
+kubectl rollout status deployment <name>	Monitor rollout status.
+kubectl rollout restart deployment <name>	Restart deployment pods.
+kubectl scale deployment <name> --replicas=3	Scale a deployment.
+kubectl delete deployment <name>	Delete a deployment.
+
+⚙️ Services, Endpoints, Ingress
+Command	Description
+kubectl get svc	List services.
+kubectl describe svc <name>	Get detailed service info.
+kubectl get endpoints	Show service endpoints.
+kubectl get ingress	List Ingress resources.
+kubectl describe ingress <name>	Describe an Ingress.
+
+📁 Namespaces and Contexts
+Command	Description
+kubectl get ns	List all namespaces.
+kubectl create ns <name>	Create a new namespace.
+kubectl delete ns <name>	Delete a namespace.
+kubectl config set-context --current --namespace=<ns>	Set default namespace for current context.
+
+📜 YAML and Resource Management
+Command	Description
+kubectl apply -f <file>.yaml	Create/update resources from YAML.
+kubectl create -f <file>.yaml	Create resource from YAML.
+kubectl delete -f <file>.yaml	Delete resource from YAML.
+kubectl edit <resource>/<name>	Edit resource live in your editor.
+kubectl get <resource> -o yaml	Output resource as YAML.
+
+🔧 Troubleshooting and Debugging
+Command	Description
+kubectl describe <resource> <name>	Detailed info on any resource.
+kubectl logs <pod>	Show logs.
+kubectl get events --sort-by='.metadata.creationTimestamp'	Show events chronologically.
+kubectl top pod	Show CPU/memory usage of pods (metrics-server required).
+
+🛠️ Custom Commands and Utilities
+Command	Description
+kubectl explain <resource>	Show schema of a resource (e.g., kubectl explain pod.spec.containers).
+kubectl api-resources	List all resource types.
+kubectl version	Show client and server version info.
