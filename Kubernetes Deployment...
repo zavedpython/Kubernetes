@@ -1,0 +1,40 @@
+Kubernetes Deployment...
+
+1. Imperative Mode vs Declarative Mode
+2. What are the Projects
+3. Application POD Deployment
+4. Orphans vs Controller POD
+5. Scalability
+6. Reliability and High-Availability
+7. Rollout & Rollback
+8. Deployment Strategy
+
+
+1. Imperative Mode vs Declarative Mode
+
+a) Imperative Mode : command line mode
+b) Declerative Mode: File/Manifests method..(.yaml)
+
+
+
+what are the projects/namespaces...
+
+1. It provide resource(pods) isolation (hide) between teams..
+2. using the projects multiple team can work in the same without conflicts.
+3. we can provide user access over the project. (view edit or full access): RBAC
+4. we can align CPU/MEM/Storage quota. (compute quota)
+
+
+create  # kubectl create ns <name>
+list    # kubectl get ns
+use	# kubectl get pod -n <name>
+delete	# kubectl delete ns <name>
+
+
+
+
+
+
+kubectl create ns rbl  # this is to create projects.
+kubectl delete ns rbl
+kubectl run test --image=nginx -n rbl
