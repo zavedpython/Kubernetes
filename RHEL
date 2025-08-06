@@ -1,0 +1,23 @@
+swapoff -a 
+ remove swap from fstab
+
+getenforce
+setenforce
+
+vi /etc/sysconfig/selinux  # make if enforcing to disable
+
+if needed adding new NIC & IP on it.
+
+nmcli connection add con-name static ifname ens224 type ethernet autoconnect yes ip4 192.168.22.250/24
+
+nmcli con up static
+
+mount /dev/sr0 /mnt/
+
+
+To allow/ add k8s port in RHEL firewall
+firewall-cmd --permanent --add-port=6443/tcp
+firewall-cmd --permanent --add-port=2379-2380/tcp
+
+firewall-cmd --reload
+firewall-cmd --list-all
