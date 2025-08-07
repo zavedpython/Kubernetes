@@ -1,2 +1,22 @@
 How to create 1st pod in kubernetes
 
+orphan pod   # An orphan pod in Kubernetes refers to a pod that is not managed by any higher-level controller (like a Deployment, StatefulSet, or ReplicaSet), or whose managing controller is no longer available.
+
+step 1 - kubectl create ns rbl  # create  namespace /project
+
+## Imerative Mode ##   You tell Kubernetes what to do directly using kubectl commands.
+Example:
+kubectl run pod1 --image=docker.in/nginx -n rbl    # this is to create pod/container
+
+kubectl run my-pod \
+  --image=nginx \
+  --restart=Never \
+  --port=80
+
+kubectl get pod -n rbl -o wide
+
+
+
+
+## Declarative Mode ##  You define the desired state in a YAML or JSON manifest file and apply it using kubectl apply
+
