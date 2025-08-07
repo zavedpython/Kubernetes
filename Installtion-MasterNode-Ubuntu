@@ -1,4 +1,21 @@
 kubeadm reset -f # to reset the cluster
+kubeadm reset -f
+rm -rf /etc/cni /opt/cni /var/lib/cni /var/lib/kubelet /etc/kubernetes
+##Generate a New Join Command on Master
+Run this on master1:
+kubeadm token create --print-join-command
+
+## Delete the nodes from cluster
+kubectl delete node ip-10-150-50-40
+kubectl delete node ip-10-150-50-86
+
+Drain the node (optional but safe)
+Only do this if the node was previously running workloads. If it's already NotReady, you can skip to step 2.
+kubectl drain ip-10-150-50-40 --ignore-daemonsets --delete-emptydir-data --force
+kubectl drain ip-10-150-50-86 --ignore-daemonsets --delete-emptydir-data --force
+## --force is required because the node is NotReady.
+
+
 
 Installation
 
