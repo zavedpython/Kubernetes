@@ -1,3 +1,9 @@
+kubectl get componentstatuses
+kubectl get node
+kubectl get ns
+kubectl get pod -n rbl -o wide
+
+
 🔍 Cluster and Context Management
 Command	Description
 kubectl config get-contexts	List all available contexts.
