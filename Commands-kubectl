@@ -17,11 +17,19 @@ kubectl  logs pod1  -n rbl                          # to see logs of pod
 kubectl  exec   -it  pod1  -n rbl   -- bash         # to enter into pod 
 kubectl describe  pod  pod1  -n krnetwork           # to see the indepth information of a pod, it is like docker inspect
 kubectl get sa -n krnetwork                         # it see the api service account, this service account automaticaly created in each project 
+kubectl run MySQL --image=docker.io/MySQL:5.6 --env MYSQL_PASSWORD=redhat -n rbl       #  -env use to pass enviremnt variable into command
 
-kubectl run MySQL --image=docker.io/MySQL:5.6 --env MYSQL_PASSWORD=redhat -n rbl
-kubectl run demo --image=docker.io/nginx --dry-run -o yaml     # This is to get outpot in a yaml from commandline mode
+
+
+
+kubectl run demo --image=docker.io/nginx --dry-run -o yaml                             # This is to get outpot in a yaml from commandline mode
+kubectl create -f pod.yaml -n rbl         # Create POD using dec. mode..
 
 kubectl api-resources
+kubectl explain pod
+kubectl explain pod.metadata
+kubectl explain pod.spec
+kubectl explain pod.spec.containers
 
 
 
