@@ -15,8 +15,20 @@ kubectl run my-pod \
 
 kubectl get pod -n rbl -o wide
 
-
-
-
 ## Declarative Mode ##  You define the desired state in a YAML or JSON manifest file and apply it using kubectl apply
+
+
+controler pod    # A pod that is created and managed by a Kubernetes controller such as:
+
+Deployment
+ReplicaSet
+StatefulSet
+DaemonSet
+Job / CronJob
+
+Lifecycle:
+The controller ensures the pod always meets the desired state.
+If the pod crashes or is deleted, the controller automatically recreates it.
+The controller tracks the pod using ownerReferences in the pod’s metadata.
+
 
