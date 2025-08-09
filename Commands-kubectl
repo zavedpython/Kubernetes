@@ -30,6 +30,7 @@ kubectl explain pod
 kubectl explain pod.metadata
 kubectl explain pod.spec
 kubectl explain pod.spec.containers
+kubectl explain pod.spec.containers --recursive=true      # to see the how many keywords can come under container
 
 
 
