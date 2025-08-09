@@ -30,5 +30,16 @@ Lifecycle:
 The controller ensures the pod always meets the desired state.
 If the pod crashes or is deleted, the controller automatically recreates it.
 The controller tracks the pod using ownerReferences in the pod’s metadata.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Note: There is no way to make ReplicationController (RC) via command line, only way to make it declarative way..
 
+ReplicationController (RC):  RC is one of the original workload controllers whose main job is to ensure that a specified number of identical pods are always running. 
+Although it’s now mostly replaced by ReplicaSet (and ReplicaSets are usually managed by Deployments), RC is still supported for backward compatibility.
+
+What is a ReplicationController? A ReplicationController is a Kubernetes object that:
+
+Watches over a set of Pods.
+Makes sure the actual number of Pods matches the desired number you specify.
+Creates or deletes Pods to maintain that number.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
