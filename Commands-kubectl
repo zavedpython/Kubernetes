@@ -31,10 +31,11 @@ kubectl explain pod.metadata
 kubectl explain pod.spec
 kubectl explain pod.spec.containers
 kubectl explain pod.spec.containers --recursive=true      # to see the how many keywords can come under container
-
-
-
-
+kubectl get rc
+kubectl create ns trading
+kubectl create -f replication.yaml -n trading  or kubectl apply -f replication.yaml -n trading
+kubectl get pod -n trading -o wide
+kubectl scale --replicas=5 rc test-rc -n trading
 
 
 
