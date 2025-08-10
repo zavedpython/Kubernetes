@@ -41,6 +41,42 @@ kubectl edit rc test-rc -n trading
 kubectl get rc test-rc -o yaml > rc.yaml   # It is to retrive if RC manifiest deleted accedently...
 
 
+kubectl run   pod1 --image=nginx  -l   tier=backend,zone=mumbai  # put lable on pod
+kubectl get pod
+kubectl get pod  --show-labels
+kubectl run   pod2  --image=nginx  -l   tier=backend,zone=delhi
+kubectl get pod  --show-labels
+kubectl get pod -l  zone=mumbai
+kubectl get pod
+kubectl get pod -l  zone=mumbai
+kubectl get pod -l  zone=delhi
+kubectl get pod
+kubectl label  pod  pod1  region=india
+kubectl label  pod  pod2  region=us
+kubectl get pod --show-labels
+kubectl delete  pod  -l region=india -A
+kubectl get pod
+kubectl get pod --show-labels
+kubectl label  pod  pod2  region=us  --overwrite
+kubectl label  pod  pod2  region=india   --overwrite
+kubectl get pod --show-labels
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
