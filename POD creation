@@ -43,3 +43,65 @@ Makes sure the actual number of Pods matches the desired number you specify.
 Creates or deletes Pods to maintain that number.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Labels   ?  
+Add/Remove/Change --- Lable
+
+Then We can List/Delete the pod based on lable
+
+1.  It is an extra  information  which placed  in the key: value  .
+2.  Based on label we can filter the pod  .
+
+  list/delete/load/resource/network/monitoring 
+
+
+List
+Delete
+
+Add 
+Remove
+Change 
+
+
+	1. Command 
+	2. Manifests
+Lab-1:  how to put  on orphan  pod by command line 
+
+Tier: backend
+Type: db
+Zone: numbai
+Region: india
+Version: "2.0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
