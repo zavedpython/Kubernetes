@@ -61,6 +61,44 @@ kubectl label  pod  pod2  region=us  --overwrite
 kubectl label  pod  pod2  region=india   --overwrite
 kubectl get pod --show-labels
 
+kubectlget pod --selector-zone=india
+kubectlget pod --selector-zone!=india
+
+
+
+1. Match Pods with a specific label
+kubectl get pods --selector app=nginx
+Returns only pods with label app=nginx.
+
+2. Match multiple labels
+kubectl get pods -l app=nginx,env=prod
+Labels must all match (app=nginx AND env=prod).
+
+3. Match using in
+kubectl get pods -l 'app in (nginx,apache)'
+Pods with app=nginx OR app=apache.
+
+4. Match using notin
+kubectl get pods -l 'env notin (dev,test)'
+Exclude pods with env=dev or env=test.
+
+5. Match label existence
+kubectl get pods -l 'env'
+All pods that have the env label (value can be anything).
+
+6. Match where label does not exist
+kubectl get pods -l '!env'
+Pods without an env label.
+
+7. Get nodes with a specific label
+kubectl get nodes -l disktype=ssd
+
+8. Get all services with a label
+kubectl get svc -l tier=backend
+
+9. Combine with watch
+kubectl get pods -l app=nginx -w
+
 
 
 
