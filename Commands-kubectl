@@ -35,7 +35,7 @@ kubectl get rc
 kubectl create ns trading
 kubectl create -f replication.yaml -n trading  or kubectl apply -f replication.yaml -n trading         # For RC yaml you can refer k8s website
 kubectl get pod -n trading -o wide
-kubectl scale --replicas=5 rc test-rc -n trading
+kubectl scale --replicas=5 rc test-rc -n trading                                                        # To scale up the number of POD as per our need
 kubectl edit rc test-rc -n trading
 
 kubectl get rc test-rc -o yaml > rc.yaml   # It is to retrive if RC manifiest deleted accedently...
