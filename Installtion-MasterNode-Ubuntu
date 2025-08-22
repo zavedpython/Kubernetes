@@ -103,7 +103,7 @@ Step-5: kubeadm init  or kubeadm init --ignore-preflight-errors=all
 
 or kubeadm init --apiserver-advertise-address=192.168.1.2   ## This is required if server has multiple NIC and you want to use specific IP with API server
 
-crictl ps
+crictl ps    # to see all 4 componenets containers are runing 
 crictl images
 
 
