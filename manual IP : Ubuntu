@@ -1,1 +1,40 @@
-command
+-------------------------------------------------
+### In Ubuntu These YAML files define your network interfaces, IP addresses, gateways, and DNS. ###
+
+root@master-1:~# ls /etc/netplan/
+50-cloud-init.yaml
+root@master-1:~# cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    enX0:
+      match:
+        macaddress: "02:43:52:39:10:7d"
+      dhcp4: true
+      dhcp6: false
+      set-name: "enX0"
+root@master-1:~#
+---------------------------------------------------------------
+
+Refer this document :  https://documentation.ubuntu.com/server/explanation/networking/configuring-networks/
+
+To configure your system to use static address assignment, create a netplan configuration in the file /etc/netplan/99_config.yaml.. The example below assumes you are configuring your 
+first Ethernet interface identified as eth0. 
+Change the addresses, routes, and nameservers values to meet the requirements of your network.
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      addresses:
+        - 10.10.10.2/24
+      routes:
+        - to: default
+          via: 10.10.10.1
+      nameservers:
+          search: [mydomain, otherdomain]
+          addresses: [10.10.10.1, 1.1.1.1]
+
+-----------------------------------------------------------------------------
+$ netplan apply
