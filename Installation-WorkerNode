@@ -1,3 +1,7 @@
+Before to start installation on worker node please ensure all these ports are allowed 
+https://kubernetes.io/docs/reference/networking/ports-and-protocols/
+
+
 KUBERNETES_VERSION=v1.32
 CRIO_VERSION=v1.32
 swapoff -a
