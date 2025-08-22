@@ -88,11 +88,20 @@ systemctl status cri-o kubelet
 systemctl is-active kubelet
 systemctl is-active cri-o
 
+apt-get update -y
+Ref: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+apt-get install -y apt-transport-https ca-certificates curl gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
 
-Step-5: kubeadm init
 
-or kubeadm init --apiserver-advertise-address=192.168.1.2
 
+
+Step-5: kubeadm init  or kubeadm init --ignore-preflight-errors=all
+
+or kubeadm init --apiserver-advertise-address=192.168.1.2   ## optional
 
 
 crictl ps
