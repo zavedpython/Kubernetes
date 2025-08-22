@@ -74,7 +74,8 @@ echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://download.o
 Step-4 : Install
 
 apt-get update -y
-apt-get install kubeadm cri-o kubelet -y
+apt-get install -y cri-o kubelet kubeadm kubectl
+
 
 
 systemctl start crio
