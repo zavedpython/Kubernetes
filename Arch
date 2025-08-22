@@ -1,19 +1,20 @@
 1. Control Plane (Master Components)
 Manages the entire cluster:
 
-Component	                                          Description
-kube-apiserver	                        Exposes the Kubernetes API. Acts as the front door to the cluster.
-                                              1. command listener
-                                              2. authentication and  authorization
-                                              3. communication  channel . 
-                                               User --Login--commands-- APIservers (Validate)--- Further  initiate .  
+Component	                                          	Description
+1- kube-apiserver	                       		 		Exposes the Kubernetes API. Acts as the front door to the cluster.
+                                              			1. command listener
+                                              			2. authentication and  authorization
+                                              			3. communication  channel . 
+                                               			User --Login--commands-- APIservers (Validate)--- Further  initiate .  
 
-etcd    	                              Distributed key-value store. Stores all cluster data (state, configuration). it is the database of  APIserver .  It container  all  information about the Clusters 
-                                        key: value information :  yaml based 
 
-kube-scheduler	                        pod placement  across the Nodes.(Default | Custom), Assigns Pods to available Nodes based on resource availability and constraints.
+2- etcd    	                              				Distributed key-value store. Stores all cluster data (state, configuration). it is the database of APIserver. It container all information about the Clusters 
+                                        				key: value information :  yaml based 
 
-kube-controller-manager	                it monitor  pod state /Node   state . Runs controllers that manage resources like ReplicationController, NodeController, etc.
+3- kube-scheduler	                        			POD placement  across the Nodes.(Default | Custom), Assigns Pods to available Nodes based on resource availability and constraints.
+
+4- kube-controller-manager	                			It monitor  pod state /Node   state . Runs controllers that manage resources like ReplicationController, NodeController, etc.
 
 
 
@@ -21,34 +22,32 @@ kube-controller-manager	                it monitor  pod state /Node   state . Ru
 1. Worker Plane  Application Node
 Runs actual workloads (Pods/containers):
 
-Component	                              Description
-kubelet	                             Talks to the API server, ensures containers are running as per Pod specs. It  is agent  of  APIserver which take the instruction from API and pass to Container runtime. 
-
-kube-proxy	                         Manages networking, routes traffic to Pods.
-Container runtime (cri-o)           Container runtime	Runs the containers (e.g., containerd, Docker, CRI-O).
+Component	                              		Description
+1-	kubelet	                             		Talks to the API server, ensures containers are running as per POD specs. It  is agent of APIserver which take the instruction from API and pass to Container runtime. 
+2-	kube-proxy	                         		Manages networking, routes traffic to Pods.
+3-	Container runtime (cri-o)           		Container runtime	Runs the containers (e.g., containerd, Docker, CRI-O).
 
 
 
  
    
 
-Pod Create.(write )
+POD Create.(write )
 Command ---APIServer (validates)---etcd----scheduler---Controller
 
 Get Query 
 Command--get pod ---API(validatation)---etcd 
 
 Master Nodes:
-
- 1. api
-  2. etcd
-  3. scheduler
- 4. controller
+	1. api
+	2. etcd
+	3. scheduler
+	4. controller
 
 Workernode:
-      1. cri-o
-      2.  kubelet
-       3. Kube-proxy 
+    1. cri-o
+    2.  kubelet
+    3. Kube-proxy 
 
 
 	1. User managed  K8s 
