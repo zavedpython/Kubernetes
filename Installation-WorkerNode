@@ -29,7 +29,7 @@ systemctl enable crio
 systemctl enable kubelet
 
 ------------------------------
-Now to join API Master server 
+Now to join API Master server from worker node  the below information is required
 
 API Server IP | Port
 API Token  (It is required one time only when you join the master cluster )      # kubeadm token list  -- run command on master node
@@ -41,3 +41,24 @@ Certificate  (It is required to communication trust relationship, These certs pr
 
 To Join cluster command :--
 # kubeadm token create --print-join-command
+
+-------------------------------------------------------
+Additional Network configuration:
+
+L-3:
+
+1. Flannel
+2. Weave
+3. Ovn-kubernetes
+4. OVS
+5. Calico : recommended
+
+Installtion : https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises
+download the manifest : curl https://raw.githubusercontent.com/projectcalico/calico/v3.30.2/manifests/calico.yaml -O
+
+kubectl create -f calico.yaml    ## Run this command to configure the network
+kubectl get ippool -o yaml       ##  To check which IP Pool has been configured
+
+
+
+
