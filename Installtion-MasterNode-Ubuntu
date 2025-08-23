@@ -1,3 +1,5 @@
+Imp folder that needs required reguler backup : /var/lib/etcd/  & /etc/kubernetes/manifests/
+
 kubeadm reset -f # to reset the cluster
 kubeadm reset -f
 rm -rf /etc/cni /opt/cni /var/lib/cni /var/lib/kubelet /etc/kubernetes
