@@ -74,6 +74,25 @@ Version: "2.0"
 
 
 
+Pod statuses in Kubernetes
+
+1. Running					: The Pod has been scheduled on a node, and all containers are running without issues.
+2. Pending					: The Pod has been accepted by the cluster but is waiting to be scheduled or waiting for images/resources.
+3.	Error					: A generic error occurred in the Pod or its containers. Usually means a failure during execution.
+4.	ContainerCreating		: The Pod is being initialized: image pulling, volume mounting, or networking setup is happening.
+5. CrashLoopBackOff			: The container started but keeps crashing repeatedly. Kubernetes retries with backoff (increasing delay).
+6. OOM (Out of Memory)		: The container exceeded its memory limit, and the kernel killed it.
+7. Terminating				: The Pod is shutting down after receiving a delete command. Kubernetes is cleaning up resources.
+8. Completed 				: The Pod finished execution successfully (typical for batch jobs).
+9: ImagePullError / ImagePullBackOff :	Kubernetes cannot pull the container image. Reasons may include wrong image name, tag, registry auth issues, or network errors.
+
+👉 In short:
+Healthy states: Running, Completed.
+Transient states: Pending, ContainerCreating, Terminating.
+Error/problem states: Error, CrashLoopBackOff, OOM, ImagePullError.
+
+
+
 
 
 
