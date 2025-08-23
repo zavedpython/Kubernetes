@@ -1,0 +1,9 @@
+In Kubernetes (K8s), namespaces are a way to divide cluster resources between multiple users, teams, or applications. They provide logical isolation within the same cluster. Think of namespaces as "virtual clusters" inside a single physical cluster.
+
+Here’s a detailed breakdown:
+
+Purpose of Namespaces
+  Resource isolation: Multiple teams can work in the same cluster without interfering with each other.
+  Access control: You can apply Role-Based Access Control (RBAC) to namespaces.
+  Resource quotas: Limit resources (CPU, memory, etc.) for a particular namespace.
+  Organization: Easier management of resources by grouping related objects.
