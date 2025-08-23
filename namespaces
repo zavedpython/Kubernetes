@@ -21,3 +21,10 @@ kube-public	                  Public namespace readable by all users
 kube-node-lease	              Holds lease objects for node heartbeat tracking
 
 Custom namespaces:     You can create your own, e.g., dev, staging, prod.
+
+namespace commands:
+
+List:	kubectl get ns 
+Create:	kubectl create ns <namespace name>
+Use:	kubectl get pod -n <namespace name>
+Delete:	kubectl delete ns <namespace name>
