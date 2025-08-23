@@ -1,3 +1,5 @@
+kubectl config get-contexts        # to check username which have logged-in
+
 In Kubernetes (K8s), namespaces are a way to divide cluster resources between multiple users, teams, or applications. They provide logical isolation within the same cluster. Think of namespaces as "virtual clusters" inside a single physical cluster.
 
 Here’s a detailed breakdown:
