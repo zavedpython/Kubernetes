@@ -14,6 +14,9 @@ kubectl run my-pod \
   --port=80
 
 kubectl get pod -n rbl -o wide
+kubectl exec -it <pod-name> -- bash
+kubectl logs <pod-name>
+kubectl describe pod web1
 
 ## Declarative Mode ##  You define the desired state in a YAML or JSON manifest file and apply it using kubectl apply
 
