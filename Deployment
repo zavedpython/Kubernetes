@@ -13,3 +13,7 @@ kubectl get pod -l app=nginx                     # To filter lable which is app=
 kubectl lable pod test zone=Mumbai region=india  # This is to apply lable 
 kubectl lable pod test zone=Delhi --overwrite    # This is to overwrite zone value to Delhi
 kubectl lable pod test zone-                     # this is to remove zone lable
+
+## All these are above mentioned are imparetive method ##
+
+In declarative mode you can mention the lable under metadata
