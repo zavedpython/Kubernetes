@@ -1,0 +1,15 @@
+Objective :
+
+1. Label and Selector
+2. deep dive about the Replication controller
+3. Replica Set
+4. Rollout and Rollback
+5. Deploment Strategy
+6. Deployment Model
+
+1. Label and Selector
+kubectl get pod --show-labels                    # To show all lables
+kubectl get pod -l app=nginx                     # To filter lable which is app=nginx
+kubectl lable pod test zone=Mumbai region=india  # This is to apply lable 
+kubectl lable pod test zone=Delhi --overwrite    # This is to overwrite zone value to Delhi
+kubectl lable pod test zone-                     # this is to remove zone lable
