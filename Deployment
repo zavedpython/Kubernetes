@@ -17,3 +17,13 @@ kubectl lable pod test zone-                     # this is to remove zone lable
 ## All these are above mentioned are imparetive method ##
 
 In declarative mode you can mention the lable under metadata
+
+Ref: Here you can get the sample dec mode yaml
+https://kubernetes.io/docs/concepts/workloads/pods/
+https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
+
+
+
+
+kubectl get pod --selector app=web
+kubectl get pod -l app=web
