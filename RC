@@ -1,0 +1,21 @@
+1. RC: Replication + Controllers:
+
+1. reliability (Self-healing): if pod get crash then it automatically 
+   delete the pod create new one .
+2. Scalability(horizontal): on demand we can add pod number for existing
+   if traffic is increased.
+
+--replicas=1
+--replicas=2:
+
+      pod1     pod2
+
+Controllers: it ensure the desired are running .
+
+Ref. URL : https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
+kubectl create -f rc.yaml  or kubectl apply -f rc.yml   
+kubectl get rc
+kubectl scale --replicas=4 rc krnetwork   or  kubectl edit rc krnetwork
+kubectl scale --replicas=0 rc krnetwork 
+
+kubectl apply -f rc.yml   # This is used if you changed in manifest & want to apply changes.. It works both create & apply
