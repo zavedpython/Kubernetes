@@ -4,3 +4,44 @@ kubectl api-resources                    # Here all the field are pre-defined wh
 kubectl explain pod                      # Here yaml instruction mentioned for pod yaml
   kubectl explain pod.apiVersion         # Using this you come to know what will come under apiVersion
   kubectl explain pod.metadata           # # Using this you come to know what will come under metadata
+
+##########################################################################################################################################################
+
+In Kubernetes declarative YAML manifests, every object must have a main object structure that defines what kind of resource it is. The four mandatory fields that appear in every YAML (for Pods, Deployments, Services, etc.) are:
+
+apiVersion: v1        # API version of the Kubernetes resource
+kind: Pod             # Resource type (Pod, Service, Deployment, etc.)
+metadata:             # Metadata about the object (like name, labels, namespace)
+spec:                 # Specification of the resource (depends on kind)
+
+
+Example:-
+
+apiVersion: v1        # API version of the Kubernetes resource
+kind: Pod             # Resource type (Pod, Service, Deployment, etc.)
+metadata:             # Metadata about the object (like name, labels, namespace)
+  name: my-pod
+  namespace: devops
+spec:                 # Specification of the resource (depends on kind)
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+
+################################################################################################################################################################
+kubectl explain pod --recursive=true   # Kubernetes shows you the full schema of a Pod manifest in YAML form. Since the schema is very large, I’ll give you the essential structure you’d see (trimmed for clarity).
+
+KIND:     Pod
+VERSION:  v1
+
+FIELDS:
+apiVersion   <string>     # API version (always required)
+kind         <string>     # Resource type (here, "Pod")
+metadata     <Object>     # Object metadata
+spec         <Object>     # Pod specification
+status       <Object>     # Current status (set by the system, not user)
+#########################################################################################################################################################
+
+kubectl run test --image=nginx --dry-run -o yaml > pod.yaml    # Using this you can extract the yamal file from imprative command to dec. mode yaml 
+kubectl get pod <pod-name> -o yaml > test.yaml                 # Using this you can extract the yaml of existing runing PODs
+
+
