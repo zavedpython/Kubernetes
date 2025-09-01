@@ -44,4 +44,21 @@ status       <Object>     # Current status (set by the system, not user)
 kubectl run test --image=nginx --dry-run -o yaml > pod.yaml    # Using this you can extract the yamal file from imprative command to dec. mode yaml 
 kubectl get pod <pod-name> -o yaml > test.yaml                 # Using this you can extract the yaml of existing runing PODs
 
+###################################################################
+kubectl run test --image=nginx  # Imparetive method
+kubectl create -f pod.yaml      # Dec. method
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
