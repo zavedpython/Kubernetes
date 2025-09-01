@@ -2,8 +2,8 @@ Declarative Mode ##  You define the desired state in a YAML or JSON manifest fil
 
 kubectl api-resources                    # Here all the field are pre-defined which comes in dec yaml. These are designed in Go Language
 kubectl explain pod                      # Here yaml instruction mentioned for pod yaml
-  kubectl explain pod.apiVersion         # Using this you come to know what will come under apiVersion
-  kubectl explain pod.metadata           # # Using this you come to know what will come under metadata
+kubectl explain pod.apiVersion           # Using this you come to know what will come under apiVersion
+kubectl explain pod.metadata             # Using this you come to know what will come under metadata
 
 ##########################################################################################################################################################
 
