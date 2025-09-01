@@ -19,3 +19,5 @@ kubectl scale --replicas=4 rc krnetwork   or  kubectl edit rc krnetwork
 kubectl scale --replicas=0 rc krnetwork 
 
 kubectl apply -f rc.yml   # This is used if you changed in manifest & want to apply changes.. It works both create & apply
+
+kubectl edit rc zaved -n web
