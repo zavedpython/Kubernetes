@@ -1,12 +1,12 @@
 🔖 Labels   > Extra identical informailtion about the POD  |Labels are key-value pairs attached to Kubernetes objects (like Pods, Services, Deployments, Nodes).
 
-🎯 Selectors > A selector is how you query/filter objects based on their labels.
+🎯 Selectors > A selector is how you query/filter objects based on their labels.   🔑 1. Equality-Based Selectors  | 🎯 2. Set-Based Selectors
 
 
 kubectl get pod --show-labels -n web    # To show lables
 
 
-POD1 = env= prod, version=1.0, project=uat,zone=india
+POD1 = env= prod, version=1.0, project=uat,zone=india  
 POD2
 POD3
 POD4
@@ -23,6 +23,11 @@ kubectl get pod --selector env!=uat -n web -o wide | kubectl get pod --selector 
 
 kubectl get pods -l 'env in (dev,uat,prod)' -n web -o wide                          # set bases query  
 kubectl get pods --selector 'env in (dev,uat,prod)' -n web -o wide                 # set bases query
-
 kubectl get pods -l 'env notin (dev,uat,prod)' -n web -o wide                          # set bases query  
 kubectl get pods --selector 'env notin (dev,uat,prod)' -n web -o wide                 # set bases query
+
+Set-based selectors use operators like:
+
+in
+notin
+exists (key) or does not exist (!key)
