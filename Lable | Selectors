@@ -7,3 +7,9 @@ POD1 = env= prod, version=1.0, project=uat,zone=india
 POD2
 POD3
 POD4
+
+kubectl get pod -l env=prod                      # Filter pod where lable env=prod
+kubectl lable pod test zone=Mumbai zone=india    # apply the lable on pod named test
+
+kubectl lable pod test env=production --overwrite  # Overwrite the lable 
+kubectl lable pod test env-                        # Remove the lable env
