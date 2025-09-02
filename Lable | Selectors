@@ -1,4 +1,7 @@
-Lable   > Extra identical informailtion about the POD  |Labels are key-value pairs attached to Kubernetes objects (like Pods, Services, Deployments, Nodes).
+🔖 Labels   > Extra identical informailtion about the POD  |Labels are key-value pairs attached to Kubernetes objects (like Pods, Services, Deployments, Nodes).
+
+🎯 Selectors > A selector is how you query/filter objects based on their labels.
+
 
 kubectl get pod --show-labels -n web    # To show lables
 
@@ -13,3 +16,13 @@ kubectl lable pod test zone=Mumbai zone=india    # apply the lable on pod named 
 
 kubectl lable pod test env=production --overwrite  # Overwrite the lable 
 kubectl lable pod test env-                        # Remove the lable env
+
+
+kubectl get pod --selector env=uat -n web -o wide | kubectl get pod -l env=uat -n web -o wide                # Equenity bases query
+kubectl get pod --selector env!=uat -n web -o wide | kubectl get pod --selector env!=uat -n web -o wide      # Equenity bases query
+
+kubectl get pods -l 'env in (dev,uat,prod)' -n web -o wide                          # set bases query  
+kubectl get pods --selector 'env in (dev,uat,prod)' -n web -o wide                 # set bases query
+
+kubectl get pods -l 'env notin (dev,uat,prod)' -n web -o wide                          # set bases query  
+kubectl get pods --selector 'env notin (dev,uat,prod)' -n web -o wide                 # set bases query
