@@ -1,1 +1,9 @@
+Lable   > Extra identical informailtion about the POD  |Labels are key-value pairs attached to Kubernetes objects (like Pods, Services, Deployments, Nodes).
 
+kubectl get pod --show-labels -n web    # To show lables
+
+
+POD1 = env= prod, version=1.0, project=uat,zone=india
+POD2
+POD3
+POD4
