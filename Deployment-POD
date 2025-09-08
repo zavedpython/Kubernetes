@@ -1,0 +1,4 @@
+kubectl create deploy krnetwork --image=nginx:1.16 --replicas=5
+kubectl get deployment
+kubectl scale --replicas=3 deploy krnetwork
+kubectl delete deploy krnetwork
