@@ -1,0 +1,19 @@
+Pod Scheduling : 
+ 
+   1. default scheduling 
+   2. Custom Scheduling Rules: 
+   
+   
+    1. Node Named Based scheduling
+	  2. Node label and NodeSelector 
+	  3. Affinity and ant-affinity  based
+	  4. Taint and toleratons based  
+	  
+	  
+1. Node Named Based scheduling:
+         1. in the deployment we can mentioned the workerNodes Name.
+		 2. one worker Node only we can add.
+		 
+		 Limitaton:
+		  1.  no failover
+		  
