@@ -1,0 +1,21 @@
+kubectl create deploy krnetwork --image=nginx:1.16 --replicas=5
+kubectl get deployment
+kubectl scale --replicas=3 deploy krnetwork
+kubectl delete deploy krnetwork
+kubectl edit deploy <web-deploy>
+kubectl set image deploy web-deploy nginx=nginx:1.18    # To change image version runtime
+kubectl rollout history deploy <web-deploy>
+
+kubectl rollout history deploy <web-deploy> --revision=2    # To see the revision history
+kubectl rollout history deploy <web-deploy> --to-revision=2  # To rollback on a specific version
+
+kubectl rollout undo deploy <web-deploy>      # to rolback on previous version
+
+kubectl rollout resume deploy <web-deploy>  # This is to resule paused deployment
+
+
+Deployment Modal...
+
+canary modal  :     Release new version to a small % of users/pods first; increase gradually.
+blue-green modal  : Run two full environments: Blue (current) and Green (new); switch all traffic at once.
+
