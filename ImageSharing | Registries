@@ -1,1 +1,6 @@
+docker save image-name > name.tar
+du -sh name.tar
+scp name.tar root@192.168.1.10:/root    # This is to transfer tar file into any machine 
+docker load -i name.tar
 
+----------------------------------------------------------------------------
