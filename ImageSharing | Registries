@@ -3,9 +3,10 @@ du -sh name.tar
 scp name.tar root@192.168.1.10:/root    # This is to transfer tar file into any machine 
 docker load -i name.tar
 
+echo -n <encoded value> | base64 -d  # This is just to decode the base64 encoded value, if any time you needed
 ----------------------------------------------------------------------------
 
-docker login docker.io -u zaved25     # Docker login command it will ask for password / PAT , In backend the pasted tocken save at cat /root/.docker/config.json
+docker login docker.io -u zaved25     # Docker login command it will ask for password / PAT , In backend the pasted tocken save at cat /root/.docker/config.json  
 
 docker tag <imageID> docker.io/zaved25/<imageName>:version    # This is for tag the image before push on regostry server. e,g docker tag f8c8b0661ec8 docker.io/zaved25/postgres:1.0
 
