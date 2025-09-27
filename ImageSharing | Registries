@@ -12,3 +12,5 @@ docker tag <imageID> docker.io/zaved25/<imageName>:version    # This is for tag 
 
 docker push image:<tag>    # This si to push image on docker registry e,g  docker push docker.io/zaved25/postgres:1.0
 
+docker logout docker.io    # After complete push image you should logout docker registry..
+
