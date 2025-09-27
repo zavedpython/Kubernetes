@@ -4,3 +4,10 @@ scp name.tar root@192.168.1.10:/root    # This is to transfer tar file into any 
 docker load -i name.tar
 
 ----------------------------------------------------------------------------
+
+docker login docker.io -u zaved25     # Docker login command it will ask for password / PAT
+
+docker tag <imageID> docker.io/zaved25/<imageName>:version    # This is for tag the image before push on regostry server. e,g docker tag f8c8b0661ec8 docker.io/zaved25/postgres:1.0
+
+docker push image:<tag>    # This si to push image on docker registry e,g  docker push docker.io/zaved25/postgres:1.0
+
