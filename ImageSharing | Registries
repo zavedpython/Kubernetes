@@ -5,7 +5,7 @@ docker load -i name.tar
 
 ----------------------------------------------------------------------------
 
-docker login docker.io -u zaved25     # Docker login command it will ask for password / PAT
+docker login docker.io -u zaved25     # Docker login command it will ask for password / PAT , In backend the pasted tocken save at cat /root/.docker/config.json
 
 docker tag <imageID> docker.io/zaved25/<imageName>:version    # This is for tag the image before push on regostry server. e,g docker tag f8c8b0661ec8 docker.io/zaved25/postgres:1.0
 
