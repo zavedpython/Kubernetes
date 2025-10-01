@@ -1,0 +1,26 @@
+ConfigMap:  CM
+
+sesitive : secret
+non-secure Information:  ConfigMap
+
+1. Namespace scope
+2. As mount and ENV variable
+3. CM modify then Pod  rollout .
+
+____________________________________
+
+NOte: there is no type of configmap
+
+Example-1:
+
+kubectl create cm cka --from-literal=proxyip=192.168.1.100
+kubectl get cm
+
+kubectl get cm cka -o yaml
+
+kubectl set env deploy nginx --from configmap/cka    # To map cm value with pod/deployment
+
+Now you see the cm value has been mapped into deployment  # kubectl edit deploy nginx
+
+If anytime value gets changed then you have to restart the deployment
+kubectl rollout restart deploy nginx
