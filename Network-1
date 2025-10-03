@@ -1,1 +1,40 @@
+Topics: Pod networking / kubernetes cluster networking
+
+1. Pod IPs
+2. Pod A to Pod communication (same host & remote Host)
+3. Pod communication to  infra network ( outside the cluster ).
+4. Service Discovery
+5. External client want to communication with Pod .
+6. NodePort & Ingress controllers & metalLB
+7. Network security
+8. Multus
+------------------------------------------------
+1. Pod IPs
+2. Pod A to Pod communication (same host & remote Host)
+3. Pod communication to  infra network ( outside the cluster )
+
+Networking:
+  1. Physical
+  2. Software define network.
+
+Noted: Pod network works CNI(container network  interface) concept. CNI: it  is software define  network  network solution.
+CNI Solution list .
+1. flannel
+2. weave
+3. ovn-kubernetes
+4. calico 
+
+
+By default  kubernetes we  prefered  calico  CNI.
+
+1. it is software define network solution.
+2. it provide L-3 Networking  function.
+3. it also provide BGP based routing . 
+4. we can configure network security  (ACL).
+
+Installation: 
+
+
+
+
 
