@@ -84,7 +84,7 @@ kubectl create -f pool.yaml  # execute this to create new modified nw pool
 Now new network will be created 
 kubectl get ippool
 
-But Ip still will be receives from older one IP pool so you have to dissable older ip pool for giving new IP 
+But Ip still will be receives from older one IP pool so you have to dissable older ip pool for giving new IP, Its mean one pool can be active at as time
 
 root@master-1:~# kubectl get ippool
 NAME                  AGE
