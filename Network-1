@@ -32,7 +32,75 @@ By default  kubernetes we  prefered  calico  CNI.
 3. it also provide BGP based routing . 
 4. we can configure network security  (ACL).
 
-Installation: 
+Installation:  manifest yaml files
+
+download Calico manifest on master node:  https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises 
+ls
+calico.yaml
+
+kubectl create -f calico.yaml    # To create the calico networks
+
+kubectl get pod -A
+kubectl get pod -A -o wide
+
+kubectl get crds | grep calico   # To see the calico network resurce.
+kubectl get ippool -o yaml  # to see the subnet & IP details
+
+kubeadm init --pod-network-cidr 172.20.10./16      # this is to set custom cidr at the time of k8s cluster setup
+###########################################################################################################################################
+
+How to create new network in existing calico...
+
+root@master-1:~# kubectl get ippool
+NAME                  AGE
+default-ipv4-ippool   8d
+root@master-1:~# kubectl get ippool default-ipv4-ippool -o yaml
+
+apiVersion: crd.projectcalico.org/v1
+kind: IPPool
+metadata:
+  annotations:
+    projectcalico.org/metadata: '{"creationTimestamp":"2025-09-24T10:34:06Z"}'
+  creationTimestamp: "2025-09-24T10:34:06Z"
+  generation: 1
+  name: default-ipv4-ippool
+  resourceVersion: "13232"
+  uid: de588db5-f39c-4e14-8724-fbc0b4ecd49f
+spec:
+  allowedUses:
+  - Workload
+  - Tunnel
+  assignmentMode: Automatic
+  blockSize: 26
+  cidr: 192.168.0.0/16
+  ipipMode: Always
+  natOutgoing: true
+  nodeSelector: all()
+  vxlanMode: Never
+
+kubectl get ippool default-ipv4-ippool -o yaml >pool.yaml  # here you can modify the nw config
+kubectl create -f pool.yaml  # execute this to create new modified nw pool
+
+Now new network will be created 
+kubectl get ippool
+
+But Ip still will be receives from older one IP pool so you have to dissable older ip pool for giving new IP 
+
+root@master-1:~# kubectl get ippool
+NAME                  AGE
+db-pool               22m
+default-ipv4-ippool   8d
+root@master-1:~# kubectl get ippool default-ipv4-ippool -o yaml>pool1.yaml
+root@master-1:~# kubectl edit ippool default-ipv4-ippool    # make older ip pool disabled 
+
+spec:
+  allowedUses:
+  - Workload
+  - Tunnel
+  assignmentMode: Automatic
+  blockSize: 26
+  cidr: 192.168.0.0/16
+  disabled: true
 
 
 
