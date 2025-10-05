@@ -1,3 +1,40 @@
+DNS Issue - Summary
+Problem # Pods in Kubernetes cluster couldn't resolve DNS names (e.g., google.com), but could reach the internet using IP addresses directly.
+
+Root Cause
+kube-proxy was misconfigured with empty values:
+
+mode: "" (should be "iptables")
+clusterCIDR: "" (should be "192.168.0.0/16")
+
+## Without these settings, kube-proxy couldn't create the necessary iptables rules to route traffic from pods to the kube-dns service (ClusterIP: 10.96.0.10). This broke service discovery, preventing DNS resolution. ##
+
+Solution
+
+Deleted the misconfigured kube-proxy ConfigMap
+# kubectl delete configmap kube-proxy -n kube-system
+
+Recreated it using kubeadm
+# kubeadm init phase addon kube-proxy --kubeconfig /etc/kubernetes/admin.conf
+
+Fixed the configuration with proper values
+
+# kubectl get configmap kube-proxy -n kube-system -o yaml | \
+     sed 's/clusterCIDR: ""/clusterCIDR: "192.168.0.0\/16"/' | \
+     sed 's/mode: ""/mode: "iptables"/' | \
+     kubectl apply -f -
+
+Restarted kube-proxy pods
+# kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+
+Result ✅ DNS resolution working - pods can now resolve domain names and access the internet properly.
+
+Key Takeaway
+When DNS fails but direct IP connectivity works, check kube-proxy configuration - specifically the mode and clusterCIDR settings in the ConfigMap.RetryClaude does not have the ability to run the code it generates yet.
+
+
+
+######################################################################
 Here are the official reference documents for future troubleshooting:
 Official Kubernetes Documentation
 
