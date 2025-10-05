@@ -1,0 +1,182 @@
+Here are the official reference documents for future troubleshooting:
+Official Kubernetes Documentation
+
+DNS Troubleshooting
+https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
+
+kube-proxy Configuration
+https://kubernetes.io/docs/reference/config-api/kube-proxy-config.v1alpha1/
+
+Cluster Networking
+https://kubernetes.io/docs/concepts/cluster-administration/networking/
+
+Service & Pod Networking
+https://kubernetes.io/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+
+CoreDNS
+https://kubernetes.io/docs/tasks/administer-cluster/coredns/
+https://coredns.io/manual/toc/ (CoreDNS official docs)
+
+kubeadm Reference
+kubeadm Configuration
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
+https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init-phase/
+
+
+Troubleshooting Commands Cheat Sheet
+Here's a quick reference for DNS troubleshooting:
+bash# Check CoreDNS
+kubectl get pods -n kube-system -l k8s-app=kube-dns
+kubectl logs -n kube-system -l k8s-app=kube-dns
+
+# Check kube-proxy
+kubectl get pods -n kube-system -l k8s-app=kube-proxy
+kubectl logs -n kube-system -l k8s-app=kube-proxy
+
+# Check DNS service
+kubectl get svc -n kube-system kube-dns
+kubectl get endpoints kube-dns -n kube-system
+
+# Test DNS from pod
+kubectl run test-dns --image=busybox --rm -it --restart=Never -- nslookup kubernetes.default
+
+# Check kube-proxy config
+kubectl get configmap kube-proxy -n kube-system -o yaml
+
+# Verify cluster CIDR
+kubectl cluster-info dump | grep -m 1 cluster-cidr
+Common Issues Summary
+Issue: DNS not resolving
+Causes:
+
+CoreDNS not running
+kube-proxy misconfigured (missing mode/clusterCIDR)
+CNI plugin issues
+Firewall blocking DNS traffic
+
+Solution: Check kube-proxy config, ensure mode: "iptables" and correct clusterCIDR are set
+#######################################################################################################################################################
+kubectl edit configmap kube-proxy -n kube-system
+
+
+Here's a complete walkthrough of all the steps we performed to diagnose and fix your Kubernetes DNS issue:
+
+1. Initial Problem Identification
+Issue: Pods couldn't resolve DNS (ping google.com failed), but worked with IP addresses and /etc/hosts entries.
+Diagnosis: DNS resolution failure in Kubernetes cluster.
+
+2. Diagnostic Steps Performed
+Step 2.1: Check CoreDNS Pods Status
+bashkubectl get pods -n kube-system | grep coredns
+Result: 4 CoreDNS pods running (1/1 Ready)
+
+Step 2.2: Check CoreDNS Logs
+bashkubectl logs -n kube-system -l k8s-app=kube-dns
+Result: No errors in CoreDNS logs - CoreDNS was running fine
+
+Step 2.3: Test DNS Resolution from Pod
+bashkubectl run test-dns --image=busybox --rm -it --restart=Never -- nslookup google.com
+Result: connection timed out; no servers could be reached
+
+Step 2.4: Check kube-dns Service
+bashkubectl get svc -n kube-system kube-dns
+Result: Service existed at ClusterIP 10.96.0.10
+
+Step 2.5: Check kube-dns Endpoints
+bashkubectl get endpoints kube-dns -n kube-system
+Result: Endpoints properly registered with CoreDNS pod IPs
+
+Step 2.6: Check CoreDNS Pod IPs
+bashkubectl get pods -n kube-system -l k8s-app=kube-dns -o wide
+Result: CoreDNS pods running on various nodes with IPs in 192.168.x.x range
+
+Step 2.7: Test Service Connectivity
+bashkubectl run test-net --image=busybox --rm -it --restart=Never -- sh
+nc -zv 10.96.0.10 53
+wget -O- http://10.96.0.10:9153/health
+Result: Connection timeout - pods couldn't reach the kube-dns service IP
+
+Step 2.8: Check kube-proxy Pods
+bashkubectl get pods -n kube-system -o wide | grep kube-proxy
+Result: All kube-proxy pods running (1/1 Ready)
+
+3. Root Cause Identification
+Step 3.1: Check kube-proxy Logs
+bashkubectl logs -n kube-system kube-proxy-8cvjq --tail=100
+Key Findings:
+
+Using iptables proxy mode
+Warning: Detect-local-mode set to ClusterCIDR, but no cluster CIDR specified
+
+Step 3.2: Check kube-proxy Configuration
+bashkubectl get configmap kube-proxy -n kube-system -o yaml | grep -A 20 "mode:"
+Root Cause Found:
+yamlmode: ""              # Empty mode!
+clusterCIDR: ""       # Empty clusterCIDR!
+Diagnosis: kube-proxy was running but without proper configuration, causing iptables rules for service routing to not be created correctly.
+
+4. Fix Attempts and Resolution
+Attempt 1: Manual ConfigMap Edit ❌
+bashkubectl edit configmap kube-proxy -n kube-system
+# Manually edited mode and clusterCIDR
+kubectl delete pod -n kube-system -l k8s-app=kube-proxy
+Result: YAML syntax error - extra quotes caused crash
+Error: yaml: line 9: did not find expected key
+Problem Identified:
+yamlclusterCIDR: ""192.168.0.0/16    # Wrong - extra quotes
+mode: ""iptables                  # Wrong - extra quotes
+Attempt 2: Reset and Proper Configuration ✅
+Step 4.1: Delete Broken ConfigMap
+bashkubectl delete configmap kube-proxy -n kube-system
+Step 4.2: Recreate with kubeadm
+bashkubeadm init phase addon kube-proxy --kubeconfig /etc/kubernetes/admin.conf
+Step 4.3: Fix Syntax Errors with sed
+bashkubectl get configmap kube-proxy -n kube-system -o yaml | \
+  sed 's/clusterCIDR: ""192.168.0.0\/16/clusterCIDR: "192.168.0.0\/16"/' | \
+  sed 's/mode: ""iptables/mode: "iptables"/' | \
+  kubectl apply -f -
+Step 4.4: Restart kube-proxy
+bashkubectl delete pod -n kube-system -l k8s-app=kube-proxy
+Step 4.5: Verify kube-proxy Pods
+bashkubectl get pods -n kube-system -l k8s-app=kube-proxy -w
+Result: All 5 kube-proxy pods running successfully ✅
+
+5. Final Verification
+bashkubectl run test-dns --image=busybox --rm -it --restart=Never -- nslookup google.com
+Result: DNS resolution working! ✅
+
+Summary: Root Cause & Solution
+Root Cause
+
+kube-proxy ConfigMap had empty values for mode and clusterCIDR
+Without these settings, kube-proxy couldn't create proper iptables rules
+Service routing was broken, preventing pods from reaching the kube-dns service
+
+Solution
+
+Deleted misconfigured kube-proxy ConfigMap
+Recreated using kubeadm
+Set correct values:
+
+mode: "iptables"
+clusterCIDR: "192.168.0.0/16"
+
+
+Restarted all kube-proxy pods
+DNS resolution started working
+
+Key Configuration
+yamlapiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: "iptables"
+clusterCIDR: "192.168.0.0/16"
+
+Lessons Learned
+
+Check kube-proxy configuration when service connectivity fails
+clusterCIDR must match your pod network CIDR (192.168.0.0/16 in your case)
+YAML syntax matters - extra quotes break the configuration
+Use kubeadm to recreate default configurations when in doubt
+Test connectivity at each layer: Pod → Service IP → Pod IP
+
