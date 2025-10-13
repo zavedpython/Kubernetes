@@ -2,11 +2,15 @@
 
 Service IP--- how to create service IP on a POD
 
-kubectl get service
-kubectl expose pod rbl-865f684976-2nwj5 --name=web --port=80
+kubectl get service   # To see the service IP
+kubectl expose pod rbl-865f684976-2nwj5 --name=web --port=80 
+or
+kubectl  expose deploy mysql --name=abc --port=3306
 
 Breakdown
 kubectl expose               → Creates a new Service object from an existing resource.
 pod rbl-865f684976-2nwj5     → Use the Pod named rbl-865f684976-2nwj5 as the template.
 --name=web                   → The new Service will be called web.
 --port=80                    → The Service will listen on port 80 (the Service’s port).
+
+kubectl get endpoints    # to see the service rule
