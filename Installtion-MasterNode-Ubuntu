@@ -101,9 +101,9 @@ apt-get install -y kubelet kubeadm kubectl
 
 
 
-Step-5: kubeadm init  or kubeadm init --ignore-preflight-errors=all
+Step-5: kubeadm init  or kubeadm init --ignore-preflight-errors=all --pod-network-cidr 172.25.0.0/16
 
-or kubeadm init --apiserver-advertise-address=192.168.1.2   ## This is required if server has multiple NIC and you want to use specific IP with API server
+or kubeadm init --apiserver-advertise-address=192.168.1.2 --pod-network-cidr 172.25.0.0/16  ## This is required if server has multiple NIC and you want to use specific IP with API server
 
 crictl ps    # to see all 4 componenets containers are runing 
 crictl images
