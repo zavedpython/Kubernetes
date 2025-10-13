@@ -1,0 +1,12 @@
+## Service Discovery ##
+
+Service IP--- how to create service IP on a POD
+
+kubectl get service
+kubectl expose pod rbl-865f684976-2nwj5 --name=web --port=80
+
+Breakdown
+kubectl expose               → Creates a new Service object from an existing resource.
+pod rbl-865f684976-2nwj5     → Use the Pod named rbl-865f684976-2nwj5 as the template.
+--name=web                   → The new Service will be called web.
+--port=80                    → The Service will listen on port 80 (the Service’s port).
