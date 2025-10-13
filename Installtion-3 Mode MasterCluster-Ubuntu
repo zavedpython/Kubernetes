@@ -4,7 +4,7 @@ setup a load balancer and add all master K8s node into this load balancer. Get t
 
 Step-2
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
-sudo kubeadm init --control-plane-endpoint "LOAD_BALANCER_DNS:6443" --upload-certs
+sudo kubeadm init --control-plane-endpoint "LOAD_BALANCER_DNS:6443" --upload-certs --pod-network-cidr 172.25.0.0/16
 
 
 swapoff -a 
