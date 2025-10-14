@@ -1,6 +1,6 @@
 ## Service Discovery ##
 
-https://kubernetes.io/docs/concepts/services-networking/service/    # manifest
+https://kubernetes.io/docs/concepts/services-networking/service/    # manifests
 
 Service IP--- how to create service IP on a POD
 
@@ -38,10 +38,10 @@ Internal Traffic Policy:  Cluster
 Events:                   <none>
 root@master-1:~#
 
-######################################################################
+###################################################################### https://ronaknathani.com/blog/2020/07/kubernetes-nodeport-and-iptables-rules/
 # iptables -t nat -L PREROUTING | column -t
-# iptables -t nat -L KUBE-SERVICES | column -t   # This is to see the how many service IP you taken
-iptables -t nat -L <pod name> -n | column -t     # To see how the traffic distrubuted between multiple POD
+# iptables -t nat -L KUBE-SERVICES | column -t     # This is to see the how many service IP you taken
+iptables -t nat -L <Table name> -n | column -t     # To see how the traffic distrubuted between multiple POD, tBle name will come from above command
 
 
 
