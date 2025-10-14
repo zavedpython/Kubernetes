@@ -1,5 +1,7 @@
 ## Service Discovery ##
 
+https://kubernetes.io/docs/concepts/services-networking/service/    # manifest
+
 Service IP--- how to create service IP on a POD
 
 kubectl get service   # To see the service IP
@@ -35,4 +37,11 @@ Session Affinity:         None
 Internal Traffic Policy:  Cluster
 Events:                   <none>
 root@master-1:~#
+
+######################################################################
+# iptables -t nat -L PREROUTING | column -t
+# iptables -t nat -L KUBE-SERVICES | column -t   # This is to see the how many service IP you taken
+iptables -t nat -L <pod name> -n | column -t     # To see how the traffic distrubuted between multiple POD
+
+
 
