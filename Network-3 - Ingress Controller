@@ -11,6 +11,13 @@ How it works:   When you create a service of type NodePort, Kubernetes opens a s
 Use case: Simple testing or small internal setups. Not ideal for production because managing ports and load balancing is manual.
 
 Traffic sent to <NodeIP>:<NodePort> is forwarded to the service, and then to the correct pod(s).
+
+what are the limitation of nodePort service .
+1. Security
+2. OPS gape
+3. Application level LB Rules:
+4. Port conflict
+
 Example:
 apiVersion: v1
 kind: Service
@@ -28,7 +35,10 @@ spec:
 
 
 
-2️⃣ Ingress Controller -  An Ingress Controller is a Kubernetes component that manages external HTTP/HTTPS access to your services.
+2️⃣ Ingress Controller -  An Ingress Controller is a Kubernetes component that manages external HTTP/HTTPS access to your services. It is a software defined application LB
+It runs as a POD, Deploy as a Manifests Mode & Helm mode
+
+Installation :https://docs.nginx.com/nginx-ingress-controller/installation/installing-nic/installation-with-manifests/
 
 How it works:  You define Ingress resources with routing rules (like domain names, paths).
 Use case:      Route multiple domains or paths to different services. Supports SSL termination, rewrites, and advanced load balancing. Production-friendly.
@@ -52,6 +62,17 @@ spec:
                 name: my-app
                 port:
                   number: 80
+
+
+
+
+
+
+
+
+
+
+
 
 
 
