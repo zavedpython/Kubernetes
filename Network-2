@@ -42,6 +42,95 @@ root@master-1:~#
 # iptables -t nat -L PREROUTING | column -t
 # iptables -t nat -L KUBE-SERVICES | column -t     # This is to see the how many service IP you taken
 iptables -t nat -L <Table name> -n | column -t     # To see how the traffic distrubuted between multiple POD, tBle name will come from above command
+##############################################################################################################################################################################################################
 
+Topics: Pod networking / kubernetes cluster networking
+1. Pod IPs 
+2. Pod A to Pod communication (same host & remote Host)
+3. Pod communication to  infra network ( outside the cluster) .
+4. Service Discovery 
+5. External client want to communication with Pod .
+6. NodePort & Ingress controllers & metalLB 
+7. Network security 
+8. Multus  
+
+____________________________
+1. Pod IPs :  true
+2. Pod A to Pod communication (same host & remote Host): true
+3. Pod communication to  infra network ( outside the cluster): true
+
+Noted:
+
+1.  Pod network works CNI(container network  interface) concept.
+Networking:
+  1.  physical
+  2. software define network.
+
+CNI: it  is software define  network  network solution.
+  
+ CNI Solution list .
+
+
+1. flannel
+2. weave
+3. ovn-kubernetes
+4. calico 
+
+
+by default  kubernetes we  prefered  calico  CNI.
+
+1. it is software define network solution.
+2. it provide L-3 Networking  function.
+3. it also provide BGP based routing . 
+4. we can configure network security  (ACL).
+
+Installation: 
+
+Node Network: underlay network
+Pod Network: overlay network/ calico network .
+     blockSize: 26
+     cidr: 172.16.0.0/16
+32-26= 6 
+Per Nodes IPs:  2*6 =  64  ips 
+total Nodes: 26-16 =  2*10= 1024  : 
+
+
+1. Private Range (classA,B,C)
+2. should not be overlap.
+3. Nodes/PerNodeIps.
+
+
+how to create new network ? 
+
+4. service discovery ?
+
+ServiceA----kube-proxy(ServiceIP)------ServiceB(IP)
+
+Node Network : 192.168.0.0/24
+Pod Network :  172.16.0.0/16
+Service Network: 10.96.0.0/12
+
+Service Ip:
+
+ 1. discovery  IP of backend micro-service
+ 2. service use selector value for discover the Pod.
+ 3. Selector value and Pod label should be match .
+ 4. if there are multiple running with same label, then service distribute the         traffic.
+ 5. Cluster IP 
+ 
+ 1. command line 
+ 2. Manifests
+  
+ServiceA----(Proxy service)ServiceIp----ServiceB 
+
+Limitation:
+1. service.yaml : create :
+
+coredns:  it basically resolve service Name to IP.
+
+webserver.default.svc.cluster.local
+service.project.svc.cluster.local
+
+ServiceA---CoreDNS---serviceIP(proxyIP)---PodIP
 
 
