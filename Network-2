@@ -14,3 +14,25 @@ pod rbl-865f684976-2nwj5     → Use the Pod named rbl-865f684976-2nwj5 as the t
 --port=80                    → The Service will listen on port 80 (the Service’s port).
 
 kubectl get endpoints    # to see the service rule
+
+# kubectl describe service db
+
+Name:                     db
+Namespace:                default
+Labels:                   app=mysql
+                          pod-template-hash=6499c788c
+Annotations:              <none>
+Selector:                 app=mysql,pod-template-hash=6499c788c
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.110.229.61
+IPs:                      10.110.229.61
+Port:                     <unset>  3306/TCP
+TargetPort:               3306/TCP
+Endpoints:
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+root@master-1:~#
+
