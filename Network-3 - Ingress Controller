@@ -12,11 +12,15 @@ Use case: Simple testing or small internal setups. Not ideal for production beca
 
 Traffic sent to <NodeIP>:<NodePort> is forwarded to the service, and then to the correct pod(s).
 
+Client --> NODEIP:PORT -->ServiceIP:port---> FE POD ---> CoreDNS ---> MySQL ServiceIP:port ---> DB POD
+
 what are the limitation of nodePort service .
 1. Security
 2. OPS gape
 3. Application level LB Rules:
 4. Port conflict
+
+kubectl expose deploy nginx --port=80 --type=NodePort
 
 Example:
 apiVersion: v1
