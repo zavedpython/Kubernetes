@@ -23,3 +23,23 @@ use case:
   Patching
   Restart
   Node remove from cluster
+--------------------------------------------------------------------------
+
+Cordon:
+
+kubectl get node
+kubectl cordon <worker-1>
+kubectl uncordon <worker-1>
+
+
+
+
+
+
+
+
+
+
+
+
+
