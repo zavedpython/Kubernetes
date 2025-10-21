@@ -11,7 +11,15 @@ It places the node into unschedulable mode.
 Upcoming pods cannot be placed.
 Existing pods keep running.
 
+Use Case: Node resource presure..
+
 Drain:
 It places the node into unschedulable mode.
 Upcoming pods cannot be placed.
 It evicts all the pods from the nodes. Now, as per the scheduling rules, pods are placed on other nodes.
+
+use case:
+   Node Upgrade:
+  Patching
+  Restart
+  Node remove from cluster
