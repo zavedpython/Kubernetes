@@ -1,0 +1,34 @@
+Kubernetes Probes --    Kubernetes uses probes to monitor the health of containers inside Pods.
+
+Probe Type	
+1.  Liveness Probe:    Checks if the container is still running properly. If it fails, K8s restarts the container.	Detect deadlocks or hung processes.
+2.  Readiness Probe:   Checks if the app is ready to serve traffic. If it fails, traffic is not sent to the Pod.	Delay traffic until app startup completes.
+3.  Startup Probe:     Used to delay other probes until startup completes. Prevents killing slow-starting apps.	For apps that take time to initialize (e.g., Java, large Flask apps).
+
+
+🧩 Common Probe Configuration Example
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+startupProbe:
+  httpGet:
+    path: /startup
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 10
+
+
+So — which one are we tackling: probes concept/configuration or troubleshooting problems?
