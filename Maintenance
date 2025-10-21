@@ -1,0 +1,17 @@
+Topics:
+
+Cordon and Drain
+PDB
+PriorityClass
+
+Node Maintenance ?
+
+Cordon:
+It places the node into unschedulable mode.
+Upcoming pods cannot be placed.
+Existing pods keep running.
+
+Drain:
+It places the node into unschedulable mode.
+Upcoming pods cannot be placed.
+It evicts all the pods from the nodes. Now, as per the scheduling rules, pods are placed on other nodes.
