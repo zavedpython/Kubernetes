@@ -1,0 +1,138 @@
+helm version
+
+helm repo list
+
+helm repo add <repo-name> <repo url>
+
+helm search repo <repo-name>   # to see the available bundels in repo
+helm search repo <repo-name>/name --versions
+
+🧰 Common Maintenance Commands
+#  kubectl get pods -n harbor                                Check pods	
+#  kubectl get svc -n harbor                                 Check services	
+#  helm status harbor -n harbor                              Get Helm release status	
+#  helm upgrade harbor . -n harbor -f harbor-values.yaml     Upgrade Harbor	
+#  helm uninstall harbor -n harbor                           Uninstall Harbor	
+
+
+🪛 Troubleshooting Notes
+Issue	                                        Root Cause	                                                                    Resolution
+unable to parse quantity's suffix	            PVC size mis-specified (5g instead of 5Gi)	                            Corrected values.yaml
+cannot re-use a name that is still in use	    Previous release not cleaned up	                                        Used helm uninstall harbor
+Helm repo add failure	                        Outbound HTTPS restriction	                                            Used local chart tarball
+
+##################################################################################################################################################################
+
+🏗️ Deployment Steps
+
+📦 1. Helm Chart Setup
+Option A — If Helm repo access works:
+
+helm repo add harbor https://helm.goharbor.io
+helm repo update
+
+Option B — If URL (https://helm.goharbor.io) is blocked:
+Download chart manually:
+wget https://github.com/goharbor/harbor-helm/archive/refs/tags/v1.14.1.tar.gz
+tar -xzf v1.14.1.tar.gz
+cd harbor-helm-1.14.1
+
+vi harbor-values.yaml
+--------------------------------------------------------
+expose:
+  type: nodePort
+  nodePort:
+    ports:
+      http:
+        port: 32080
+  tls:
+    enabled: false
+
+externalURL: http://10.150.144.31:32080
+
+harborAdminPassword: "Reli@gar@2025"
+
+persistence:
+  enabled: true
+  persistentVolumeClaim:
+    registry:
+      size: 5Gi
+    database:
+      size: 5Gi
+    redis:
+      size: 2Gi
+    trivy:
+      size: 2Gi
+
+-----------------------------------------------------------------------------
+Install Harbor
+helm install harbor . -n harbor -f harbor-values.yaml
+
+If Re-installing
+helm uninstall harbor -n harbor
+helm install harbor . -n harbor -f harbor-values.yaml
+
+Check Helm Releases
+helm list -n harbor
+
+View Release Status
+helm status harbor -n harbor
+
+Check Pods
+kubectl get pods -n harbor -o wide
+
+Check Services
+kubectl get svc -n harbor
+
+Check PersistentVolumes / Claims
+kubectl get pv,pvc -n harbor
+
+Get Pod Logs
+kubectl logs <pod-name> -n harbor
+
+🧰 7. Maintenance Commands
+
+List Helm Releases
+helm list -n harbor
+
+Upgrade Harbor (after config change)
+helm upgrade harbor . -n harbor -f harbor-values.yaml
+
+Uninstall Harbor
+helm uninstall harbor -n harbor
+
+Delete Namespace (optional cleanup)
+kubectl delete ns harbor
+
+🧾 8. Troubleshooting Commands
+
+Issue				                        Command	                                                              Description
+Pod CrashLoopBackOff		            kubectl describe pod <pod-name> -n harbor				                      Shows pod event and error reason
+View logs of failing container	    kubectl logs <pod-name> -n harbor --previous				                  Get logs from previous crash
+Check events in namespace	          kubectl get events -n harbor --sort-by=.metadata.creationTimestamp	  Sorted event list
+PVC error (Pending)		              kubectl describe pvc <pvc-name> -n harbor				                      Check if storage class bound
+Check helm failure details	        helm status harbor -n harbor						                              Helm release debug info
+Cleanup failed release		          helm uninstall harbor -n harbor						                            Remove existing release
+Check node health		                kubectl get nodes -o wide						                                  Ensure nodes Ready status
+Check service endpoints		          kubectl get endpoints -n harbor						                            Verify services are exposed
+Describe service		                kubectl describe svc harbor -n harbor					                        Verify NodePort/IP details
+Port testing			                  curl -I http://10.150.144.31:32080					                          Check service accessibility
+Exec into pod			                  kubectl exec -it <pod-name> -n harbor -- /bin/bash			              For in-container debug
+
+🪛 9. Common Fixes Applied
+
+Problem						                                    Cause						                                                Fix Command / Action
+unable to parse quantity's suffix		                  PVC size mis-specified (5g instead of 5Gi)	                    Edited harbor-values.yaml
+cannot re-use a name that is still in use	Helm        release already exists			                                    helm uninstall harbor -n harbor
+repo add error					                              Blocked external Helm repo			                                Used local chart tarball
+harbor-nginx service missing			                    Chart merges nginx → harbor NodePort		                        Verified with kubectl get svc harbor -n harbor
+Repeated jobservice restart			                      Dependent DB init delay				                                  Waited 2–3 minutes; automatically resolved
+
+
+🧩 10. Validation Checklist
+kubectl get pods -n harbor
+kubectl get svc -n harbor
+kubectl get pvc -n harbor
+kubectl get pv -n harbor
+helm status harbor -n harbor
+
