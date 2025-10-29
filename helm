@@ -135,4 +135,5 @@ kubectl get svc -n harbor
 kubectl get pvc -n harbor
 kubectl get pv -n harbor
 helm status harbor -n harbor
+kubectl get secret harbor-core -n harbor -o jsonpath="{.data.HARBOR_ADMIN_PASSWORD}" | base64 --decode   # to get the admin pwd
 
